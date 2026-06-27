@@ -21,5 +21,12 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
 });
 
-// 2. Rutas del CRUD de Selecciones (Protegidas internamente por Auth y Roles)
+// 2. Ruta específica para filtrar partidos por fase (Debe ir ANTES del recurso para que no se confunda con un ID)
+Route::get('partidos/fase/{fase}', [PartidoController::class, 'filtrarPorFase']);
+
+// 3. Ruta específica para la Tabla de Posiciones por grupo
+Route::get('grupos/{grupo}/tabla', [PartidoController::class, 'tablaPosiciones']);
+
+// 4. Recursos CRUD completos (Manejan automáticamente GET, POST, PUT, DELETE)
 Route::apiResource('selecciones', SeleccionController::class);
+Route::apiResource('partidos', PartidoController::class);
