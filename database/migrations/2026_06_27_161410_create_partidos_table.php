@@ -11,29 +11,34 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('partidos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            // Agregamos el rol con un valor por defecto
-            $table->enum('rol', ['ADMIN', 'CONSULTA'])->default('CONSULTA');
-            $table->rememberToken();
+            // Claves foráneas hacia la tabla selecciones
+            $table->foreignId('seleccion_local_id')->constrained('selecciones')->onDelete('cascade');
+            $table->foreignId('seleccion_visitante_id')->constrained('selecciones')->onDelete('cascade');
+
+            $table->dateTime('fecha');
+            $table->string('estadio');
+
+            // Regla: Fases válidas
+            $table->enum('fase', ['GRUPOS', 'OCTAVOS', 'CUARTOS', 'SEMIFINAL', 'FINAL']);
+
+            // Regla: Goles no pueden ser negativos (unsigned)
+            $table->unsignedInteger('goles_local')->default(0);
+            $table->unsignedInteger('goles_visitante')->default(0);
+
+            // Regla: Estados válidos
+            $table->enum('estado', ['PROGRAMADO', 'EN_JUEGO', 'FINALIZADO'])->default('PROGRAMADO');
+
             $table->timestamps();
         });
-
-        // ... (el resto del código de reset passwords y sessions déjalo igual)
     }
 
     /**
      * Reverse the migrations.
      */
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('partidos');
     }
 };
