@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Seleccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controller as BaseController;
 
-class SeleccionController extends Controller
+class SeleccionController extends BaseController
 {
     public function __construct()
     {

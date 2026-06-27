@@ -6,12 +6,13 @@ use App\Models\Partido;
 use App\Models\Seleccion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Routing\Controller as BaseController;
 
-class PartidoController extends Controller
+class PartidoController extends BaseController
 {
     public function __construct()
     {
-        // Protege con JWT y restringe escritura solo a ADMIN
+        // Protegemos con JWT y restringimos escritura solo a ADMIN
         $this->middleware('auth:api');
         $this->middleware('rol.auth')->only(['store', 'update', 'destroy']);
     }
@@ -77,14 +78,14 @@ class PartidoController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        // Regla: No jugar contra sí misma
+        // Regla de negocio: No jugar contra sí misma
         if ($request->seleccion_local_id == $request->seleccion_visitante_id) {
             return response()->json(['error' => 'Una selección no puede jugar contra sí misma.'], 422);
         }
 
         $data = $request->all();
 
-        // Regla: Si ya se mandan goles, cambia automáticamente a FINALIZADO
+        // Regla de negocio: Si ya se mandan goles, cambia automáticamente a FINALIZADO
         if ($request->has('goles_local') || $request->has('goles_visitante')) {
             $data['estado'] = 'FINALIZADO';
         }
@@ -128,7 +129,7 @@ class PartidoController extends Controller
             return response()->json(['error' => 'Una selección no puede jugar contra sí misma.'], 422);
         }
 
-        // Regla: Al registrar el resultado, cambia automáticamente a FINALIZADO
+        // Regla de negocio: Al registrar el resultado, cambia automáticamente a FINALIZADO
         if ($request->has('goles_local') || $request->has('goles_visitante')) {
             $data['estado'] = 'FINALIZADO';
         }
@@ -152,7 +153,7 @@ class PartidoController extends Controller
     }
 
     /**
-     * Tabla de posiciones por grupo
+     * Endpoint estrella: Tabla de posiciones por grupo
      * GET /api/grupos/{grupo}/tabla
      */
     public function tablaPosiciones($grupo)

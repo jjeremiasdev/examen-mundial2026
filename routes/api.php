@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SeleccionController;
+use App\Http\Controllers\PartidoController;
 
 /*
 |--------------------------------------------------------------------------
