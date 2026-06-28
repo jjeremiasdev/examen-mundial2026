@@ -25,6 +25,9 @@ Route::group(['prefix' => 'auth'], function () {
 // 2. Ruta específica para filtrar partidos por fase (Debe ir ANTES del recurso para que no se confunda con un ID)
 Route::get('partidos/fase/{fase}', [PartidoController::class, 'filtrarPorFase']);
 
+// Ruta, específica para actualizar el resultado de un partido
+Route::put('partidos/{id}/resultado', [PartidoController::class, 'update']);
+
 // 3. Ruta específica para la Tabla de Posiciones por grupo
 Route::get('grupos/{grupo}/tabla', [PartidoController::class, 'tablaPosiciones']);
 

@@ -80,7 +80,7 @@ class PartidoController extends BaseController
 
         // Regla de negocio: No jugar contra sí misma
         if ($request->seleccion_local_id == $request->seleccion_visitante_id) {
-            return response()->json(['error' => 'Una selección no puede jugar contra sí misma.'], 422);
+            return response()->json(['error' => 'Una seleccion no puede jugar contra sí misma.'], 422);
         }
 
         $data = $request->all();
@@ -126,7 +126,7 @@ class PartidoController extends BaseController
         $local = $request->seleccion_local_id ?? $partido->seleccion_local_id;
         $visitante = $request->seleccion_visitante_id ?? $partido->seleccion_visitante_id;
         if ($local == $visitante) {
-            return response()->json(['error' => 'Una selección no puede jugar contra sí misma.'], 422);
+            return response()->json(['error' => 'Una seleccion no puede jugar contra sí misma.'], 422);
         }
 
         // Regla de negocio: Al registrar el resultado, cambia automáticamente a FINALIZADO

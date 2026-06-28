@@ -77,7 +77,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::guard('api')->logout();
-        return response()->json(['message' => 'Sesión cerrada exitosamente']);
+        return response()->json(['message' => 'Sesion cerrada exitosamente']);
     }
 
     /**

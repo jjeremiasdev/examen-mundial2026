@@ -36,7 +36,7 @@ class SeleccionController extends BaseController
         $seleccion = Seleccion::find($id);
 
         if (!$seleccion) {
-            return response()->json(['error' => 'Selección no encontrada'], 404);
+            return response()->json(['error' => 'Seleccion no encontrada'], 404);
         }
 
         return response()->json($seleccion, 200);
@@ -63,7 +63,7 @@ class SeleccionController extends BaseController
         $seleccion = Seleccion::create($request->all());
 
         return response()->json([
-            'message' => 'Selección registrada exitosamente',
+            'message' => 'Seleccion registrada exitosamente',
             'data' => $seleccion
         ], 201);
     }
@@ -77,7 +77,7 @@ class SeleccionController extends BaseController
         $seleccion = Seleccion::find($id);
 
         if (!$seleccion) {
-            return response()->json(['error' => 'Selección no encontrada'], 404);
+            return response()->json(['error' => 'Seleccion no encontrada'], 404);
         }
 
         $validator = Validator::make($request->all(), [
@@ -95,7 +95,7 @@ class SeleccionController extends BaseController
         $seleccion->update($request->all());
 
         return response()->json([
-            'message' => 'Selección actualizada exitosamente',
+            'message' => 'Seleccion actualizada exitosamente',
             'data' => $seleccion
         ], 200);
     }
@@ -115,7 +115,7 @@ class SeleccionController extends BaseController
         $seleccion->delete();
 
         return response()->json([
-            'message' => 'Selección eliminada exitosamente'
+            'message' => 'Seleccion eliminada exitosamente'
         ], 200);
     }
 }

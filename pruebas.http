@@ -1,0 +1,176 @@
+### Configuración de Variables Globales
+@baseUrl = http://examen-mundial2026.test/api
+@token = token (ADMIN O CONSULTA)
+
+# ------------------------------------
+# AUTENTICACIÓN
+# ------------------------------------
+
+### Registrar un Usuario ADMIN 
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "name": "Freddy Admin",
+    "email": "fredd.admin@ucsg.edu.ec",
+    "password": "password123",
+    "rol": "ADMIN"
+}
+
+### Registrar un Usuario CONSULTA
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "name": "Usuaio consulta",
+    "email": "user.cunslt@ucsg.edu.ec",
+    "password": "123password",
+    "rol": "CONSULTA"
+}
+
+### Iniciar Sesión ADMIN (Login)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "fredd.admin@ucsg.edu.ec",
+    "password": "password123"
+}
+
+### Iniciar Sesión CONSULTA (Login)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "user.cunslt@ucsg.edu.ec",
+    "password": "123password"
+}
+
+### Obtener Usuario Autenticado
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### Cerrar Sesión (Logout)
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{token}}
+
+# ------------------------------------
+# SELECCIONES
+# ------------------------------------
+
+### Listar Selecciones (ADMIN y CONSULTA)
+GET {{baseUrl}}/selecciones
+Authorization: Bearer {{token}}
+
+### Obtener una Selección por ID (ADMIN y CONSULTA)
+GET {{baseUrl}}/selecciones/1 
+Authorization: Bearer {{token}}
+
+### Crear una Selección (ADMIN)
+POST {{baseUrl}}/selecciones
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nombre": "Ecuador",
+    "continente": "Sudamerica",
+    "grupo": "A",
+    "ranking_fifa": 30,
+    "entrenador": "Sebastian Beccacece"
+}
+
+### Crear otra Selección (ADMIN)
+POST {{baseUrl}}/selecciones
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nombre": "Paises Bajos",
+    "continente": "Europa",
+    "grupo": "A",
+    "ranking_fifa": 8,
+    "entrenador": "Ronald Koeman"
+}
+
+### Actualizar una Selección (ADMIN)
+PUT {{baseUrl}}/selecciones/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nombre": "Nuevo Ecuador",
+    "continente": "Sudamérica",
+    "grupo": "A",
+    "ranking_fifa": 28,
+    "entrenador": "Sebastián Beccacece"
+}
+
+### Eliminar una Selección (ADMIN)
+DELETE {{baseUrl}}/selecciones/2
+Authorization: Bearer {{token}}
+
+# ------------------------------------
+# PARTIDOS
+# ------------------------------------
+
+### Listar todos los Partidos (ADMIN y CONSULTA)
+GET {{baseUrl}}/partidos
+Authorization: Bearer {{token}}
+
+### Obtener un Partido por ID (ADMIN y CONSULTA)
+GET {{baseUrl}}/partidos/1
+Authorization: Bearer {{token}}
+
+### Filtrar Partidos por Fase (ADMIN y CONSULTA)
+GET {{baseUrl}}/partidos/fase/GRUPOS
+Authorization: Bearer {{token}}
+
+### Crear un Partido (ADMIN)
+POST {{baseUrl}}/partidos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "seleccion_local_id": 1,
+    "seleccion_visitante_id": 2,
+    "fecha": "2026-07-05 16:00:00",
+    "estadio": "Estadio Modelo",
+    "fase": "GRUPOS",
+    "goles_local": 0,
+    "goles_visitante": 0,
+    "estado": "PROGRAMADO"
+}
+
+### Actualizar datos de un Partido (ADMIN)
+PUT {{baseUrl}}/partidos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "seleccion_local_id": 1,
+    "seleccion_visitante_id": 2,
+    "fecha": "2026-07-05 18:00:00",
+    "estadio": "Estadio Monumental",
+    "fase": "GRUPOS",
+    "estado": "EN_JUEGO"
+}
+
+### Registrar el Resultado de un Partido (ADMIN / Cambia a FINALIZADO)
+PUT {{baseUrl}}/partidos/1/resultado
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "goles_local": 2,
+    "goles_visitante": 1
+}
+
+### Eliminar un Partido (ADMIN)
+DELETE {{baseUrl}}/partidos/1
+Authorization: Bearer {{token}}
+
+# Tabla de posiciones
+
+### Ver Tabla de Posiciones por Grupo (ADMIN y CONSULTA)
+GET {{baseUrl}}/grupos/A/tabla
+Authorization: Bearer {{token}}
